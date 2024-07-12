@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,11 +9,22 @@
     <h1>Upload a file</h1>
     <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="file" required>
-        <button type="submit"> Upload</button>
+        <button type="submit">Upload</button>
         {% if file %}
-            <h1> Uploaded {{ file.filename}}</h1>
-        {% else %}
+            <h1>Uploaded {{ file.filename }}</h1>
+        {% endif %}
+    </form>
 
+    <h1>Upload a file for prediction</h1>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="pred_file" required>
+        <button type="submit">Predict</button>
+        {% if prediction %}
+            <ul>
+                {% for item in prediction %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
         {% endif %}
     </form>
 </body>

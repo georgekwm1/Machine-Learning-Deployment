@@ -115,6 +115,17 @@ if df0 is not None:
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return render_template('home.html', file=file)
 
+    @app.route('/predict', methods=['POST'])
+    def predict():
+        input_data = request.get_json()
+        input_record = Input(**input_data)
+        db.session.add(input_record)
+        db.session.commit()
+        machine = MachineModel()
+        model = machine.load_model('output/model/ML_model.h5')
+        prediction = machine.predict(model, input_data)
+        return jsonify(prediction=prediction)
+
     # Serialization of Objects that cannot be jsonify(i.e. values stored in the database)
     fields = ["id"]
     fields.extend(iter_columns)
@@ -127,3 +138,11 @@ else:
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+# updated_schema, response = upload()
+# input_scema = updated_schema(many=True)
+# input_data = request.get_json()
+# input_record = Input(**input_data)
+# db.session.add(input_record)
+# db.session.commit()
