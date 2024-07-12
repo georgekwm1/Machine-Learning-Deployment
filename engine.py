@@ -2,15 +2,17 @@ import matplotlib.pyplot as plt
 from keras._tf_keras.keras.layers import SimpleRNN, Dense, Dropout
 from keras._tf_keras.keras.models import Sequential
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.model_selection import train_test_split
 from keras._tf_keras.keras.models import load_model
 import os
+import pandas as pd
+import joblib
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
 class MachineModel():
-    def __init__(self, dataframe) -> None:
+    def __init__(self, dataframe=None) -> None:
         self.dataframe = dataframe
 
     def buidmodel(self) -> None:
@@ -73,6 +75,8 @@ class MachineModel():
 
         # Save the model
         model.save('output/model/ML_model.h5')
+        joblib.dump(x_scaler, 'output/model/x_scaler.gz')
+        joblib.dump(y_scaler, 'output/model/y_scaler.gz')
 
         # Plot the comparison of the predicted value and the actual test value
         plt.plot(y_test, label="Actual Value", color='red', linewidth=2)
@@ -94,11 +98,28 @@ class MachineModel():
         print(f"MSE Score: {mse_score}")
         print(f"R2 Score: {r2 * 100}%")
 
-    def load_model(self, path: str) -> any:
+    def load_model(self, model_path: str) -> any:
         """Load the model from the given path."""
         try:
-            model = load_model(path)
+            model = load_model(model_path, custom_objects={'mse': 'mse'})
             return model
         except FileNotFoundError as e:
             print(
                 f"Could not load the specified Model, please check you inputed the correct path: {e}")
+
+    def predict(self, model: any, input_data: any) -> any:
+        """Uses the model to give predictions for the input data"""
+        iter_columns = list(
+            input_data.dtypes[input_data.dtypes != 'object'].index)
+
+        x_scaler = joblib.load('output/model/x_scaler.gz')
+        y_scaler = joblib.load('output/model/y_scaler.gz')
+
+        inputs = input_data[iter_columns].drop(
+            columns=iter_columns[-1]).values  # Convert to NumPy array
+        inputs_scaled = x_scaler.fit_transform(inputs)
+        input_reshaped = inputs_scaled.reshape(
+            (inputs_scaled.shape[0], 1, inputs_scaled.shape[1]))
+        prediction_scaled = model.predict(input_reshaped)
+        prediction = y_scaler.inverse_transform(prediction_scaled)
+        return prediction

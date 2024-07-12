@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify, request, render_template
 from sqlalchemy import Column, Integer, String, Float
 import marshmallow
 import sqlite3
@@ -13,11 +13,16 @@ app = Flask(__name__)
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
     os.path.join(BASE_DIR, 'database.db')
+app.config['UPLOAD_FOLDER'] = os.path.join(BASE_DIR, 'uploads')
 
 # initialize the database and other apps
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 jwt = JWTManager(app)
+
+# Ensure the upload folder exists
+# if not os.path.exists(app.config['SQLALCHEMY_DATABASE_URI']):
+#     os.makedirs(app.config['SQLALCHEMY_DATABASE_URI'])
 
 # Import the file to be processed as a dataframe
 
@@ -55,11 +60,11 @@ if df0 is not None:
     # Print the list of columns in the dataframe
     print(iter_columns)
 
-    # Create the machine model object
-    machine_model = MachineModel(df0)
+    # # Create the machine model object
+    # machine_model = MachineModel(df0)
 
-    # Build the machine model
-    machine_model.buidmodel()
+    # # Build the machine model
+    # machine_model.buidmodel()
 
     # Database models
 
@@ -92,7 +97,23 @@ if df0 is not None:
 
     @app.route('/')
     def hello_world():
-        return 'Hello world'
+        return render_template('home.html')
+
+    @app.route('/test')
+    def test():
+        return jsonify(message="This is a test"), 200
+
+    @app.route('/upload', methods=['POST'])
+    def upload():
+        if 'file' not in request.files:
+            return 'No file inserted'
+        file = request.files['file']
+        if file.filename == '':
+            return 'No file selected'
+        if file:
+            filename = file.filename
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return render_template('home.html', file=file)
 
     # Serialization of Objects that cannot be jsonify(i.e. values stored in the database)
     fields = ["id"]
