@@ -21,7 +21,9 @@
     <form action="/predict" method="post" enctype="multipart/form-data">
         <input type="file" name="pred_file" required>
         <button type="submit">Predict</button>
-        {% if prediction.any() %}
+        {% if prediction|length == 0 %}
+           
+        {% elif prediction.any() %}
             <ul>
                 {% for item in prediction %}
                     <li>{{ item }}</li>
