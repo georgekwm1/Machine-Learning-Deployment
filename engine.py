@@ -83,9 +83,7 @@ class MachineModel():
         plt.plot(prediction, label="Predicted Value",
                  color='blue', linewidth=2)
         plt.legend()
-        plt.show()
         plt.savefig("output/pictures/figure.jpg")
-        plt.clf()
         print("Graph generated successfully")
 
         # Calculate the metrics

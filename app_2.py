@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, send_file
 from sqlalchemy import Column, Integer, String, Float
 import marshmallow
 import sqlite3
@@ -22,6 +22,8 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 jwt = JWTManager(app)
 
+updated_schema = None
+
 # Ensure the upload folder exists
 # if not os.path.exists(app.config['SQLALCHEMY_DATABASE_URI']):
 #     os.makedirs(app.config['SQLALCHEMY_DATABASE_URI'])
@@ -30,10 +32,12 @@ jwt = JWTManager(app)
 
 
 def is_csv(filename):
+    """Check if file is a csv file"""
     return filename.lower().endswith('.csv')
 
 
 def is_excel(filename):
+    """Check if file an excel file"""
     return filename.lower().endswith('.xlsx')
 
 # Database models
@@ -52,6 +56,7 @@ class InputSchema(ma.Schema):
 
 
 def add_dynnamic_fields(schema_class, iter_columns):
+    """Add field attributes dynamically to a specified Class"""
     for column in iter_columns:
         setattr(schema_class, column, fields.Field)
 
@@ -62,6 +67,7 @@ def add_dynnamic_fields(schema_class, iter_columns):
 
 @app.route('/')
 def hello_world():
+    """Home page"""
     return render_template('home.html')
 
 
@@ -72,6 +78,10 @@ def test():
 
 @app.route('/upload', methods=['POST'])
 def upload():
+    """Uploads file to be evaluated and used to build and 
+    train a model to be used in prediction"""
+    global updated_schema
+
     if 'file' not in request.files:
         return 'No file inserted'
     file = request.files['file']
@@ -119,7 +129,7 @@ def upload():
             with app.app_context():
                 # Drops any existing database
                 db.drop_all()
-                # db.session.commit()
+                db.session.commit()
                 # Recreates database
                 db.create_all()
                 # Insert data into the database
@@ -137,7 +147,7 @@ def upload():
                     return add_dynnamic_fields(InputSchema, iter_columns)
 
                 updated_schema = transfer()
-            return updated_schema, render_template('home.html', file=file), 200
+            return render_template('home.html', file=file), 200
 
         else:
             raise RuntimeError("Dataframe could not be initialized")
@@ -145,6 +155,8 @@ def upload():
 
 @app.route('/predict', methods=['POST'])
 def predict():
+    """"Uploads file to be predicted"""
+    global updated_schema
 
     if 'pred_file' not in request.files:
         return 'No file inserted'
@@ -184,7 +196,25 @@ def predict():
             machine = MachineModel()
             model = machine.load_model('output/model/ML_model.h5')
             prediction = machine.predict(model, df0)
-            return render_template('home.html', pred_file=prediction)
+
+            # Save prediction to a CSV file
+            prediction_df = pd.DataFrame(prediction)
+            prediction_df.to_csv('prediction.csv', index=False)
+            print(prediction)
+
+            # prediction_data = []
+
+            # if updated_schema:
+            #     schema_instace = updated_schema()
+            #     prediction_data = schema_instace.dump(prediction, many=True)
+
+            return render_template('home.html', prediction=prediction, download_link='/download')
+        return render_template('home.html', error="No file uploaded")
+
+
+@app.route('/download')
+def download_file():
+    return send_file('prediction.csv', as_attachment=True)
 
 
 if __name__ == "__main__":

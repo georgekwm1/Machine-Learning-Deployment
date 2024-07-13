@@ -12,6 +12,8 @@
         <button type="submit">Upload</button>
         {% if file %}
             <h1>Uploaded {{ file.filename }}</h1>
+        {% else %}
+            <h1>Problems encountered while uploading the file</h1>
         {% endif %}
     </form>
 
@@ -19,12 +21,17 @@
     <form action="/predict" method="post" enctype="multipart/form-data">
         <input type="file" name="pred_file" required>
         <button type="submit">Predict</button>
-        {% if prediction %}
+        {% if prediction.any() %}
             <ul>
                 {% for item in prediction %}
                     <li>{{ item }}</li>
                 {% endfor %}
             </ul>
+        {% else %}
+            <h1>No predictions available</h1>
+        {% endif %}
+        {% if download_link %}
+            <a href="{{ download_link }}">Download Predictions</a>
         {% endif %}
     </form>
 </body>
