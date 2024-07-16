@@ -1,0 +1,70 @@
+{% extends 'layout.html' %}
+
+{% block title %}Home - MALM{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <section class="row p-3 p-lg-5 upload border-bottom">
+    <div class="col-12 col-lg-6 about">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere fuga,
+        consequatur dolorum explicabo nulla sunt mollitia sit asperiores
+        itaque officia minus sed corrupti, magni sint odit eius pariatur ex
+        expedita ipsum, saepe dolor harum. Iusto maiores, reiciendis magnam
+        provident quos sunt ex fugit alias commodi accusamus deserunt eos
+        labore itaque dolorum eius officia praesentium autem recusandae
+        numquam eveniet dolores nostrum fugiat. Nemo voluptatibus ullam
+        obcaecati omnis magni. Nam quibusdam nihil itaque minima quia,
+        voluptatem laborum sapiente laboriosam aut temporibus.
+      </p>
+    </div>
+
+    <div class="upload-button-container col-12 col-lg-6 mx-auto">
+      <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" id="file-upload" name="file" style="display: none;" />
+        <button
+          id="custom-button"
+          class="btn btn-primary btn-lg mt-5 btn-sty"
+          onclick="document.getElementById('file-upload').click()"
+          type="button"
+        >
+          Upload File
+        </button>
+        <p>Upload CSV or Excel file here</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="steps my-5">
+    <h1 class="text-center mb-4">How It Works</h1>
+    <div class="row px-5">
+      <div class="col-12 col-lg-4 steps-card">
+        <h3 class="step-num">1</h3>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+          Reprehenderit doloribus placeat maiores possimus doloremque,
+          corrupti rerum. Odit a pariatur incidunt!
+        </p>
+      </div>
+
+      <div class="col-12 col-lg-4 steps-card">
+        <h3 class="step-num">2</h3>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+          Reprehenderit doloribus placeat maiores possimus doloremque,
+          corrupti rerum. Odit a pariatur incidunt!
+        </p>
+      </div>
+
+      <div class="col-12 col-lg-4 steps-card">
+        <h3 class="step-num">3</h3>
+        <p>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+          Reprehenderit doloribus placeat maiores possimus doloremque,
+          corrupti rerum. Odit a pariatur incidunt!
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %}
