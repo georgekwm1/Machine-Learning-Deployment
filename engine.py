@@ -1,13 +1,16 @@
-import matplotlib.pyplot as plt
-from keras._tf_keras.keras.layers import SimpleRNN, Dense, Dropout
-from keras._tf_keras.keras.models import Sequential
-from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from sklearn.model_selection import train_test_split
-from keras._tf_keras.keras.models import load_model
-import os
-import pandas as pd
 import joblib
+import pandas as pd
+import numpy as np
+import os
+from keras._tf_keras.keras.models import load_model
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from keras._tf_keras.keras.models import Sequential
+from keras._tf_keras.keras.layers import SimpleRNN, Dense, Dropout
+import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
@@ -45,7 +48,7 @@ class MachineModel():
         X_test_reshaped = X_test_scaled.reshape(
             (X_test_scaled.shape[0], 1, X_test_scaled.shape[1]))
 
-        epochs = 50
+        epochs = 10
         batch_size = 32
         # input_node = inputs.shape[1]
         layer_1_nodes = 300
@@ -83,7 +86,9 @@ class MachineModel():
         plt.plot(prediction, label="Predicted Value",
                  color='blue', linewidth=2)
         plt.legend()
-        # plt.savefig("output/pictures/figure.jpg")
+        plt.savefig("output/pictures/figure.jpg")
+        # plt.show()
+        # plt.clf()
         print("Graph generated successfully")
 
         # Calculate the metrics
@@ -107,17 +112,29 @@ class MachineModel():
 
     def predict(self, model: any, input_data: any) -> any:
         """Uses the model to give predictions for the input data"""
+
+        # All columns in the table
         iter_columns = list(
             input_data.dtypes[input_data.dtypes != 'object'].index)
 
+        # Loads the Scalers
         x_scaler = joblib.load('output/model/x_scaler.gz')
         y_scaler = joblib.load('output/model/y_scaler.gz')
 
+        # Drops the last columns as it would not be neccessary since that is what is to be predicted
         inputs = input_data[iter_columns].drop(
             columns=iter_columns[-1]).values  # Convert to NumPy array
+
+        # Scales the data using the imported scalers
         inputs_scaled = x_scaler.fit_transform(inputs)
+
+        # Reshapes the data
         input_reshaped = inputs_scaled.reshape(
             (inputs_scaled.shape[0], 1, inputs_scaled.shape[1]))
+
+        # Predicts the scaled data
         prediction_scaled = model.predict(input_reshaped)
+
+        # Conversion of the scaled data back to the original data
         prediction = y_scaler.inverse_transform(prediction_scaled)
         return prediction

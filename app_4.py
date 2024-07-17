@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, render_template, send_file
-from sqlalchemy import Column, Integer, String, Float, Table, MetaData, create_engine
+from sqlalchemy import Column, Integer, String, Float, Table, MetaData, create_engine, text
 import marshmallow
 import sqlite3
 import io
@@ -104,6 +104,9 @@ def upload():
             iter_columns = (df0.dtypes[df0.dtypes != 'object'].index if len(
                 df0.dtypes[df0.dtypes != 'object']) > 0 else []).to_list()
 
+            # metadata.drop_all(db.engine)
+            # db.session.commit()
+
             # Create the machine model object
             machine_model = MachineModel(df0)
 
@@ -115,8 +118,11 @@ def upload():
 
             with app.app_context():
                 # Drop any existing database tables
-                db.drop_all()
-                db.session.commit()
+                # Drop the existing table
+                with db.engine.connect() as connection:
+                    connection.execute(
+                        text('DROP TABLE IF EXISTS "Input_Table"'))
+                    connection.commit()
 
                 # Dynamically create the table with columns
                 dynamic_columns = [Column('id', Integer, primary_key=True)]
@@ -178,7 +184,7 @@ def predict():
 
         if df0 is not None:
             # Preprocess and clean data
-            df0 = df0.dropna()
+            # df0 = df0.dropna()
 
             # Print the list of columns in the Input model
             print([c.name for c in metadata.tables['Input_Table'].columns])
