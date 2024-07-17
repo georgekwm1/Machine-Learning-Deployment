@@ -21,16 +21,23 @@
 
     <div class="upload-button-container col-12 col-lg-6 mx-auto">
       <form action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" id="file-upload" name="file" style="display: none;" />
+        <input type="file" id="file-upload" name="file" style="display: none;" required />
         <button
           id="custom-button"
           class="btn btn-primary btn-lg mt-5 btn-sty"
           onclick="document.getElementById('file-upload').click()"
           type="button"
         >
-          Upload File
+          Select File
         </button>
+        <button class="btn btn-secondary btn-lg mt-5 btn-sty" type="submit"> Upload file</button>
         <p>Upload CSV or Excel file here</p>
+        {% if file %}
+            <h1>Uploaded {{ file.filename }}</h1>
+
+        {% else %}
+            <h1>Problems encountered while uploading the file</h1>
+        {% endif %}
       </form>
     </div>
   </section>

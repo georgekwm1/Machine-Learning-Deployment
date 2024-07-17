@@ -1,40 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Upload a file</h1>
     <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" required>
-        <button type="submit">Upload</button>
-        {% if file %}
-            <h1>Uploaded {{ file.filename }}</h1>
-        {% else %}
-            <h1>Problems encountered while uploading the file</h1>
-        {% endif %}
+      <input type="file" name="file" required />
+      <button type="submit">Upload</button>
+      {% if file %}
+      <h1>Uploaded {{ file.filename }}</h1>
+      {% else %}
+      <h1>Problems encountered while uploading the file</h1>
+      {% endif %}
     </form>
 
     <h1>Upload a file for prediction</h1>
     <form action="/predict" method="post" enctype="multipart/form-data">
-        <input type="file" name="pred_file" required>
-        <button type="submit">Predict</button>
-        {% if prediction|length == 0 %}
-           
-        {% elif prediction.any() %}
-            <ul>
-                {% for item in prediction %}
-                    <li>{{ item }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <h1>No predictions available</h1>
-        {% endif %}
-        {% if download_link %}
-            <a href="{{ download_link }}">Download Predictions</a>
-        {% endif %}
+      <input type="file" name="pred_file" required />
+      <button type="submit">Predict</button>
+      {% if prediction|length == 0 %} {% elif prediction.any() %}
+      <ul>
+        {% for item in prediction %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <h1>No predictions available</h1>
+      {% endif %} {% if download_link %}
+      <a href="{{ download_link }}">Download Predictions</a>
+      {% endif %}
     </form>
-</body>
+  </body>
 </html>
