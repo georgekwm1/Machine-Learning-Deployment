@@ -61,7 +61,7 @@ def add_dynamic_fields(schema_class, iter_columns):
 
 
 @app.route('/')
-def hello_world():
+def Home():
     """Home page"""
     return render_template('home.html')
 

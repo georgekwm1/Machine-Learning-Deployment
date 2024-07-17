@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block title %}Predict - MALM{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <!-- File upload -->
+    <section class="file-upload p-3 p-lg-5 upload border-bottom">
+      <button class="file-upload-btn" type="button" onclick="$('.file-upload-input').click()">Add A File</button>
+    
+      <div class="image-upload-wrap">
+          <input class="file-upload-input" type='file' onchange="readURL(this);" accept="file/*" />
+          <div class="drag-text">
+              <h3>Drag and drop a file</h3>
+          </div>
+      </div>
+      <div class="file-upload-content">
+         <div class="uploaded uploaded--one">
+              <i class="far fa-file-pdf"></i>
+              <div class="file">
+                  <div class="file__name">
+                      <p id="file-preview"></p>
+                      <i class="fas fa-times mx-4" onclick="removeUpload()"></i>
+                  </div>
+                  <div class="progress">
+                      <div class="progress-bar bg-primary progress-bar-animated" style="width:100%">100%</div>
+                  </div>
+             </div>
+         </div>
+
+         <button class="file-predict-btn" type="button">Predict</button>
+      </div>
+    </section>
+
+    <!-- PREDICTION OUTPUT -->
+
+    <section class="output mt-5">
+      <h4 class="label mb-4">Response</h4>
+      <textarea name="" id="" class="100%" cols="30" rows="10" disabled></textarea>
+    </section>
+</div>
+
+{% endblock %}
