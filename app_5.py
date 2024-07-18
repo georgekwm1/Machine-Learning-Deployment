@@ -195,16 +195,25 @@ def predict():
             # Print the list of columns in the Input model
             print([c.name for c in metadata.tables['Input_Table'].columns])
 
+            # Select only columns that do not contain strings or are of Object type
+            iter_columns = (df0.dtypes[df0.dtypes != 'object'].index if len(
+                df0.dtypes[df0.dtypes != 'object']) > 0 else []).to_list()
+
             machine = MachineModel()
             model = machine.load_model('output/model/ML_model.h5')
             prediction = machine.predict(model, df0)
 
             # Save prediction to a CSV file
             prediction_df = pd.DataFrame(prediction)
-            prediction_df.to_csv('prediction.csv', index=False)
-            print(prediction)
+            new_prediction = prediction_df.iloc[:]
+            df0[iter_columns[-1]] = new_prediction
+            df0.to_csv('prediction.csv', index=False)
+            print(df0)
 
-            return render_template('predict.html', prediction=prediction, download_link='/download')
+            # Convert DataFrame to a list of dictionaries for Jinja2
+            prediction_list = df0.to_dict(orient='records')
+
+            return render_template('predict.html', prediction=prediction_list, download_link='/download')
         return render_template('home.html', error="No file uploaded")
 
 

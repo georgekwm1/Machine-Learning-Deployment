@@ -48,7 +48,7 @@
         <textarea name id class="100%" cols="30" rows="10" disabled>
         {% if prediction|length == 0 %}
         <h1>Please upload a file first</h1>
-        {% elif prediction.any() %}
+        {% elif prediction %}
             <ul>
                 {% for item in prediction %}
                     <li>{{ item }}</li>
