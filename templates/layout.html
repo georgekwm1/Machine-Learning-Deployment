@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}MALM{% endblock %}</title>
+    <title>{% block title %}Predictify{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
     <link
       rel="stylesheet"
@@ -23,10 +23,10 @@
         <label for="check" class="checkbtn">
           <i class="fas fa-bars"></i>
         </label>
-        <label class="logo">MALM</label>
+        <label class="logo">Predictify</label>
         <ul>
           <li><a class="active" href="/">Home</a></li>
-          <li><a href="/predict.html">Predict</a></li>
+          <li><a href="{{ url_for('pred') }}">Predict</a></li>
           <li><a href="#">Contact</a></li>
         </ul>
       </nav>

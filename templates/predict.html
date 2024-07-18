@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block title %}Predict - MALM{% endblock %}
+{% block title %}Predict - Predictify{% endblock %}
 
 {% block content %}
 
@@ -47,7 +47,7 @@
         <h4 class="label mb-4">Response</h4>
         <textarea name id class="100%" cols="30" rows="10" disabled>
         {% if prediction|length == 0 %}
-           
+        <h1>Please upload a file first</h1>
         {% elif prediction.any() %}
             <ul>
                 {% for item in prediction %}

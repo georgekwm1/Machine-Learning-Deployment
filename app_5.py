@@ -72,6 +72,11 @@ def test():
     return jsonify(message="This is a test"), 200
 
 
+@app.route('/pred')
+def pred():
+    return render_template('predict.html')
+
+
 @app.route('/upload', methods=['POST'])
 def upload():
     """Uploads file to be evaluated and used to build and train a model to be used in prediction"""
