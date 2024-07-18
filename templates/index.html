@@ -1,20 +1,20 @@
-{% extends 'layout.html' %} {% block title %} Home - Predictify {% endblock %} {%
-block content %}
+{% extends 'layout.html' %} {% block title %} Home - Predictify {% endblock %}
+{% block content %}
 <div class="container my-5">
   <section class="row p-3 p-lg-5 upload border-bottom">
     <div class="col-12 col-lg-6 about">
       <p>
-        Welcome to Predictify! 
-        <br> 
-        <br>
-        Unlock the power of machine learning with
-        Predictify, your go-to platform for accurate and efficient predictions.
-        Whether you're a data enthusiast, a business professional, or a curious
-        mind, Predictify provides you with seamless access to cutting-edge
-        predictive analytics. Simply upload your data, and let our advanced
-        algorithms do the rest. Join us in exploring the future of data-driven
-        decision-making, where your insights are just a click away. Experience
-        the future. Experience Predictify.
+        Welcome to Predictify!
+        <br />
+        <br />
+        Unlock the power of machine learning with Predictify, your go-to
+        platform for accurate and efficient predictions. Whether you're a data
+        enthusiast, a business professional, or a curious mind, Predictify
+        provides you with seamless access to cutting-edge predictive analytics.
+        Simply upload your data, and let our advanced algorithms do the rest.
+        Join us in exploring the future of data-driven decision-making, where
+        your insights are just a click away. Experience the future. Experience
+        Predictify.
       </p>
     </div>
 
@@ -39,9 +39,7 @@ block content %}
           Upload file
         </button>
         <p>Upload CSV or Excel file here</p>
-        {% if file|length == 0 %}
-        
-        {% elif file %}
+        {% if file|length == 0 %} {% elif file %}
         <h1>Uploaded {{ file.filename }}</h1>
 
         {% else %}
@@ -57,27 +55,37 @@ block content %}
       <div class="col-12 col-lg-4 steps-card">
         <h3 class="step-num">1</h3>
         <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-          Reprehenderit doloribus placeat maiores possimus doloremque, corrupti
-          rerum. Odit a pariatur incidunt!
+          Before uploading a file, the data should be cleaned. The cleaning
+          involves removing any column that has rows which contains any alphabet
+          or words as values. The column names should be at the first row of the
+          file. If any column contains a word or alphabet, the column will be
+          completely removed and not used for analysis. The file should only
+          contain <b><em>Numerical values</em></b>. The column of what you intend to
+          predict must be placed as the last column in the file.
         </p>
       </div>
 
       <div class="col-12 col-lg-4 steps-card">
         <h3 class="step-num">2</h3>
         <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-          Reprehenderit doloribus placeat maiores possimus doloremque, corrupti
-          rerum. Odit a pariatur incidunt!
+          <b><em>Select</em></b> and <b><em>Upload</em></b> a file (csv or excel file). This is the file that
+          will be used to train the model that will be predicted. Give it a
+          little time to analyze the data and train the model. Depending on the
+          volume of the data, it could take a little more time, be patient.
         </p>
       </div>
 
       <div class="col-12 col-lg-4 steps-card">
         <h3 class="step-num">3</h3>
         <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-          Reprehenderit doloribus placeat maiores possimus doloremque, corrupti
-          rerum. Odit a pariatur incidunt!
+          When the upload is completed, you will be automatically directed to
+          the predict page. This is where you will input the file you want to
+          predict. The file you want to predict should be cleaned and arranged
+          as the file used to train the model, all the columns should be
+          arranged the same way, however, the should be no values in the last
+          column since that is what we want to predict. Click on
+          <b><em>Predict</em></b> to run the predictions. After a successful
+          prediction, the output file should be availble for download.
         </p>
       </div>
     </div>
