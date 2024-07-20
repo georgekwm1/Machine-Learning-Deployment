@@ -77,6 +77,10 @@ def pred():
     return render_template('predict.html')
 
 
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 @app.route('/upload', methods=['POST'])
 def upload():
     """Uploads file to be evaluated and used to build and train a model to be used in prediction"""
@@ -220,6 +224,11 @@ def predict():
 @app.route('/download')
 def download_file():
     return send_file('prediction.csv', as_attachment=True)
+
+
+@app.route('/404')
+def err():
+    return render_template('404.html')
 
 
 if __name__ == "__main__":
