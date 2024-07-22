@@ -28,17 +28,72 @@
         <label class="logo">Predictify</label>
         <ul>
           <li><a class="active" href="/">Home</a></li>
+          <li><a href="{{ url_for('about') }}">About</a></li>
           <li><a href="{{ url_for('pred') }}">Predict</a></li>
           <li><a href="{{ url_for('contact') }}">Contact</a></li>
         </ul>
       </nav>
+    
+       <!-- <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Predictify</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link active" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('pred') }}">Predict</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+     -->
+ 
+
     </div>
+
+
+     <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Predictify</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('about') }}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('pred') }}">Predict</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav> -->
+
+
 
     {% block content %}
     {% endblock %}
 
     <footer class="border text-center py-3">
-      copyright @cALXTeam
+      © 2024 Predictify. All rights reserved.
     </footer>
 
     <script

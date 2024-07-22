@@ -1,0 +1,46 @@
+{% extends 'layout.html' %} {% block title %} About - Predictify {% endblock %}
+{% block content %}
+
+<section class="about p-3 p-lg-5">
+    <h1 class="text-center mb-4">About Predictify</h1>
+    <div>
+         <p class="mb-4 p-2">
+        Predictify was born out of a passion for harnessing the power of data to make informed decisions. Inspired by the need to simplify complex predictive analytics, our project aims to provide users with a seamless experience in predicting outcomes using their data. This journey began as a Portfolio Project for <a href="https://www.alxafrica.com/" target="_blank">ALX</a>, where we sought to apply our learnings and showcase our skills in a practical, impactful way.
+    </p>
+    <p class="mb-4 p-2">
+        The timeline of Predictify's development is a testament to our dedication and commitment. From ideation to execution, we have continuously strived to enhance the user experience, ensuring that our platform is both intuitive and powerful.
+    </p>
+    <p class="mb-4 p-2">
+        We invite you to explore the capabilities of Predictify and join us in our mission to make predictive analytics accessible to all.
+    </p>
+
+    </div>
+    <h3 class="mb-4 text-center">Meet the Team</h3>
+    <div class="row">
+        {% for member in team_members %}
+        <div class="col-md-4 text-center mb-4">
+            <div class="team-member card p-3">
+                {% if member.image.startswith('http') %}
+                <img src="{{ member.image }}" class="rounded-circle mb-3 mx-auto" alt="{{ member.name }}" style="width: 150px; height: 150px;">
+            {% else %}
+                <img src="{{ url_for('static', filename=member.image) }}" class="rounded-circle mb-3 mx-auto" alt="{{ member.name }}" style="width: 150px; height: 150px;">
+            {% endif %}
+                <h5>{{ member.name }}</h5>
+                <p>{{ member.role }}</p>
+                <div class="social-links">
+                    <a href="{{ member.linkedin }}" target="_blank" class="me-2"><i class="fab fa-linkedin"></i></a>
+                    <a href="{{ member.github }}" target="_blank" class="me-2"><i class="fab fa-github"></i></a>
+                    <a href="{{ member.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <h3 class="mt-5 text-center">Project Repository</h3>
+    <p class="text-center">
+        You can find the source code for Predictify on our <a href="https://github.com/georgekwm1/Machine-Learning-Deployment" target="_blank">GitHub repository</a>.
+    </p>
+</section>
+
+{% endblock %}
