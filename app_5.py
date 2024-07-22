@@ -130,7 +130,7 @@ def contact():
         msg = Message()
         msg.subject = "Contact submission form"
         msg.sender = 'geonaetltd@gmail.com'
-        msg.recipients = ['geonaetltd@gmail.com', 'timmyspark1@gmail.com']
+        msg.recipients = ['geonaetltd@gmail.com']
         msg.body = f"""
         First Name: {firstname}
         Last Name: {lastname}
