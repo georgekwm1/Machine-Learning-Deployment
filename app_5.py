@@ -71,12 +71,13 @@ def add_dynamic_fields(schema_class, iter_columns):
 
 # Team Members Json
 
+
 team_members = [
     {
-        "name": "George Ogbonna",
+        "name": "Ogbonna George Ekwueme",
         "role": "Team Lead / Backend Developer",
         "image": "https://avatars.githubusercontent.com/u/10302268?v=4",
-        "linkedin": "https://www.linkedin.com/in/memberone",
+        "linkedin": "https://www.linkedin.com/in/georgekwm1",
         "github": "https://github.com/georgekwm1",
         "twitter": "https://x.com/georgekwm1"
     },
@@ -88,13 +89,13 @@ team_members = [
         "github": "https://github.com/timmySpark",
         "twitter": "https://twitter.com/timmy__spark"
     },
-     {
+    {
         "name": "Hamisu Yusuf",
         "role": "Devops",
         "image": "https://avatars.githubusercontent.com/u/111646226?v=4",
         "linkedin": "https://www.linkedin.com/in/hamisu-yusuf",
         "github": "https://github.com/hamisuyusuf",
-        "twitter": "https://twitter.com/membertwo"
+        "twitter": "https://twitter.com/Yuskey123"
     }
 ]
 
@@ -108,7 +109,8 @@ def Home():
 @app.route('/about')
 def about():
     """About page"""
-    return render_template('about.html')
+    return render_template('about.html', team_members=team_members)
+
 
 @app.route('/test')
 def test():
@@ -292,11 +294,6 @@ def predict():
 @app.route('/download')
 def download_file():
     return send_file('prediction.csv', as_attachment=True)
-
-
-@app.route('/404')
-def err():
-    return render_template('404.html')
 
 
 if __name__ == "__main__":
