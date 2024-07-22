@@ -1,13 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
     text-decoration: none;
     list-style: none;
-}
+    font-family: "Poppins","Montserrat", sans-serif;
 
-body {
-    font-family: "Montserrat", sans-serif;
 }
 
   /* Navbar */
@@ -49,7 +49,7 @@ nav {
     margin: 0 5px;
   }
   
-  a.active, a:hover {
+  nav ul li a.active,  nav ul li a:hover {
     background: #1b9bff;
     transition: .5s;
   }
@@ -109,81 +109,7 @@ nav {
       }
   }
   
-  .upload-button-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    box-shadow: 1.5px 3px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    padding: 20px;
-    margin-top: 20px;
-    background-color: #f9f9f9;
-  }
-  
-  .upload-button-container p {
-    margin-top: 10px;
-    color: #555;
-  }
-  
-  .btn-sty {
-    width: 100%;
-    max-width: 300px;
-  }
-  
-  @media (max-width: 768px) {
-    .upload-button-container {
-        width: 90%;
-        margin: auto;
-        order: 1;
-    }
-  
-    .about{
-      order: 2;
-      margin-top: 30px !important;
-    }
-  
-    .btn-sty {
-        width: 100%;
-        padding: 15px 0;
-        font-size: 18px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .btn-sty {
-        font-size: 16px;
-        padding: 12px 0;
-    }
-  }
-  
-  .steps .steps-card .step-num {
-    padding: 11px;
-    background-color: black;
-    color: white;
-    width: 55px;
-    border-radius: 50%;
-    text-align: center;
-    font-weight: bold;
-    margin: 20px auto;
-  }
-  
-  
-  .btn-sty{
-      color: white;
-      border: none;
-      cursor: pointer;
-      width: 70%;
-      height: 25%;
-      padding: 4px 10px;
-      border-radius: 30px;
-  }
-  
-  button:hover {
-      background-color: #0056b3;
-  }
-  
+
   /* File upload section */
   section.file-upload {
     background-color: #ffffff;
@@ -396,6 +322,59 @@ nav {
         border-radius: 20px;
     }
 }
+
+
+/* About Section Styles */
+
+.about {
+  background-color: #f9f9f9 !important;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.team-member {
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.team-member img {
+  border: 5px solid #0074cd;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
+
+.team-member h5 {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #0074cd;
+}
+
+.team-member p {
+  color: #666;
+  font-size: 14px;
+}
+
+.team-member .social-links a {
+  color: #0074cd;
+  font-size: 20px;
+  margin: 0 10px;
+  transition: color 0.3s ease-in-out;
+}
+
+.team-member .social-links a:hover {
+  color: #0056b3;
+}
+
+.team-member:hover {
+  transform: translateY(-10px);
+}
+
 
 /* Contact Styles */
 
