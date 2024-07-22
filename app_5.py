@@ -75,7 +75,7 @@ def add_dynamic_fields(schema_class, iter_columns):
 team_members = [
     {
         "name": "Ogbonna George Ekwueme",
-        "role": "Team Lead / Backend Developer",
+        "role": "Team Lead / Backend Developer / Machine Learning Engineer",
         "image": "https://avatars.githubusercontent.com/u/10302268?v=4",
         "linkedin": "https://www.linkedin.com/in/georgekwm1",
         "github": "https://github.com/georgekwm1",
@@ -130,7 +130,7 @@ def contact():
         msg = Message()
         msg.subject = "Contact submission form"
         msg.sender = 'geonaetltd@gmail.com'
-        msg.recipients = ['geonaetltd@gmail.com']
+        msg.recipients = ['geonaetltd@gmail.com', 'timmyspark1@gmail.com']
         msg.body = f"""
         First Name: {firstname}
         Last Name: {lastname}
