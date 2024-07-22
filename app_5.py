@@ -60,6 +60,35 @@ def add_dynamic_fields(schema_class, iter_columns):
     schema_class.Meta.fields = ('id', ) + tuple(iter_columns)
     return schema_class
 
+# Team Members Json
+
+team_members = [
+    {
+        "name": "George Ogbonna",
+        "role": "Team Lead / Backend Developer",
+        "image": "https://avatars.githubusercontent.com/u/10302268?v=4",
+        "linkedin": "https://www.linkedin.com/in/memberone",
+        "github": "https://github.com/georgekwm1",
+        "twitter": "https://x.com/georgekwm1"
+    },
+    {
+        "name": "Erinle Oluwatimilehin",
+        "role": "Frontend Developer",
+        "image": "images/Timi-logo.png",
+        "linkedin": "https://www.linkedin.com/in/oluwatimilehin-erinle-2a241b1b0",
+        "github": "https://github.com/timmySpark",
+        "twitter": "https://twitter.com/timmy__spark"
+    },
+     {
+        "name": "Hamisu Yusuf",
+        "role": "Devops",
+        "image": "https://avatars.githubusercontent.com/u/111646226?v=4",
+        "linkedin": "https://www.linkedin.com/in/hamisu-yusuf",
+        "github": "https://github.com/hamisuyusuf",
+        "twitter": "https://twitter.com/membertwo"
+    }
+]
+
 
 @app.route('/')
 def Home():
@@ -77,9 +106,15 @@ def pred():
     return render_template('predict.html')
 
 
+@app.route('/about')
+def about():
+    return render_template('about.html', team_members=team_members)
+
+
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
 
 @app.route('/upload', methods=['POST'])
 def upload():
