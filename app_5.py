@@ -1,10 +1,11 @@
-from flask import Flask, jsonify, request, render_template, send_file, redirect
+from flask import Flask, jsonify, request, render_template, send_file, redirect, url_for
 from sqlalchemy import Column, Integer, String, Float, Table, MetaData, create_engine, text
 import marshmallow
 import sqlite3
 import io
 import os
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
 from flask_marshmallow import Marshmallow
 from marshmallow import fields
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token
@@ -17,11 +18,19 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
     os.path.join(BASE_DIR, 'database.db')
 app.config['UPLOAD_FOLDER'] = os.path.join(BASE_DIR, 'uploads')
 app.config['SESSION_TYPE'] = 'filesystem'
+# Configure Flask-Mail
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = 'geonaetltd@gmail.com'
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
 # initialize the database and other apps
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 jwt = JWTManager(app)
+mail = Mail(app)
 
 # Ensure the upload folder exists
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
@@ -96,24 +105,46 @@ def Home():
     return render_template('index.html')
 
 
+@app.route('/about')
+def about():
+    """About page"""
+    return render_template('about.html')
+
 @app.route('/test')
 def test():
     return jsonify(message="This is a test"), 200
 
 
-@app.route('/pred')
-def pred():
-    return render_template('predict.html')
-
-
-@app.route('/about')
-def about():
-    return render_template('about.html', team_members=team_members)
-
-
-@app.route('/contact')
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
+    if request.method == 'POST':
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        email = request.form['email']
+        number = request.form['number']
+        text_area = request.form['text']
+
+        # Send email
+        msg = Message()
+        msg.subject = "Contact submission form"
+        msg.sender = 'geonaetltd@gmail.com'
+        msg.recipients = ['geonaetltd@gmail.com']
+        msg.body = f"""
+        First Name: {firstname}
+        Last Name: {lastname}
+        Email: {email}
+        Phone Number: {number}
+        Message: {text_area}
+        """
+        msg.reply_to = email
+        mail.send(msg)
+        return redirect(url_for('contact'))
     return render_template('contact.html')
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
 
 
 @app.route('/upload', methods=['POST'])
@@ -201,59 +232,61 @@ def upload():
             raise RuntimeError("Dataframe could not be initialized")
 
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['GET', 'POST'])
 def predict():
     """"Uploads file to be predicted"""
-    db.drop_all()
-    db.session.commit()
-    if 'pred_file' not in request.files:
-        return 'No file inserted'
-    file = request.files['pred_file']
-    if file.filename == '':
-        return 'No file selected'
-    if file:
-        filename = file.filename
+    if request.method == 'POST':
+        db.drop_all()
+        db.session.commit()
+        if 'pred_file' not in request.files:
+            return 'No file inserted'
+        file = request.files['pred_file']
+        if file.filename == '':
+            return 'No file selected'
+        if file:
+            filename = file.filename
 
-        df0 = None
+            df0 = None
 
-        if is_csv(filename):
-            try:
-                df0 = pd.read_csv(io.BytesIO(file.read()))
-            except Exception as e:
-                print(f"Error reading csv file: {e}")
-        elif is_excel(file):
-            try:
-                df0 = pd.read_excel(io.BytesIO(file.read()))
-            except Exception as e:
-                print(f"Error reading excel file: {e}")
+            if is_csv(filename):
+                try:
+                    df0 = pd.read_csv(io.BytesIO(file.read()))
+                except Exception as e:
+                    print(f"Error reading csv file: {e}")
+            elif is_excel(file):
+                try:
+                    df0 = pd.read_excel(io.BytesIO(file.read()))
+                except Exception as e:
+                    print(f"Error reading excel file: {e}")
 
-        if df0 is not None:
-            # Preprocess and clean data
-            # df0 = df0.dropna()
+            if df0 is not None:
+                # Preprocess and clean data
+                # df0 = df0.dropna()
 
-            # Print the list of columns in the Input model
-            print([c.name for c in metadata.tables['Input_Table'].columns])
+                # Print the list of columns in the Input model
+                print([c.name for c in metadata.tables['Input_Table'].columns])
 
-            # Select only columns that do not contain strings or are of Object type
-            iter_columns = (df0.dtypes[df0.dtypes != 'object'].index if len(
-                df0.dtypes[df0.dtypes != 'object']) > 0 else []).to_list()
+                # Select only columns that do not contain strings or are of Object type
+                iter_columns = (df0.dtypes[df0.dtypes != 'object'].index if len(
+                    df0.dtypes[df0.dtypes != 'object']) > 0 else []).to_list()
 
-            machine = MachineModel()
-            model = machine.load_model('output/model/ML_model.h5')
-            prediction = machine.predict(model, df0)
+                machine = MachineModel()
+                model = machine.load_model('output/model/ML_model.h5')
+                prediction = machine.predict(model, df0)
 
-            # Save prediction to a CSV file
-            prediction_df = pd.DataFrame(prediction)
-            new_prediction = prediction_df.iloc[:]
-            df0[iter_columns[-1]] = new_prediction
-            df0.to_csv('prediction.csv', index=False)
-            print(df0)
+                # Save prediction to a CSV file
+                prediction_df = pd.DataFrame(prediction)
+                new_prediction = prediction_df.iloc[:]
+                df0[iter_columns[-1]] = new_prediction
+                df0.to_csv('prediction.csv', index=False)
+                print(df0)
 
-            # Convert DataFrame to a list of dictionaries for Jinja2
-            prediction_list = df0.to_dict(orient='records')
+                # Convert DataFrame to a list of dictionaries for Jinja2
+                prediction_list = df0.to_dict(orient='records')
 
-            return render_template('predict.html', prediction=prediction_list, download_link='/download')
-        return render_template('home.html', error="No file uploaded")
+                return render_template('predict.html', prediction=prediction_list, download_link='/download')
+            return render_template('home.html', error="No file uploaded")
+    return render_template('predict.html')
 
 
 @app.route('/download')
