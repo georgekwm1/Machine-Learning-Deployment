@@ -19,8 +19,8 @@
     </div>
 
     <div class="upload-button-container col-12 col-lg-6 mx-auto">
-      <form action="/upload" method="POST" enctype="multipart/form-data">
-        <input
+      <form action="/upload" class="mt-5" method="POST" enctype="multipart/form-data">
+        <!-- <input
           type="file"
           id="file-upload"
           name="file"
@@ -32,12 +32,36 @@
           class="btn btn-primary btn-lg mt-5 btn-sty"
           onclick="document.getElementById('file-upload').click()"
           type="button"
-        >
+        > -->
+        
+        <button class="btn btn-primary btn-lg mt-5 btn-sty" type="button"
+                onclick="$('.file-upload-input').click()">
           Select File
         </button>
+        <input class="file-upload-input" type='file'
+                    onchange="readURL(this);" accept="file/*"
+                    name="file" />
         <button class="btn btn-secondary btn-lg mt-5 btn-sty" type="submit">
           Upload file
         </button>
+        <div class="file-upload-content">
+          <div class="uploaded uploaded--one">
+              <i class="far fa-file-pdf"></i>
+              <div class="file">
+                  <div class="file__name">
+                      <p id="file-preview"></p>
+                      <i class="fas fa-times mx-4"
+                          onclick="removeUpload()"></i>
+                  </div>
+                  <div class="progress">
+                      <div
+                          class="progress-bar bg-primary progress-bar-animated"
+                          style="width:100%">100%</div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!--  -->
         <p>Upload CSV or Excel file here</p>
         {% if file|length == 0 %} {% elif file %}
         <h1>Uploaded {{ file.filename }}</h1>
