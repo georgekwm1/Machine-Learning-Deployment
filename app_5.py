@@ -287,6 +287,8 @@ def predict():
                 # Convert DataFrame to a list of dictionaries for Jinja2
                 prediction_list = df0.to_dict(orient='records')
 
+                prediction_list = prediction_list[:10]
+
                 return render_template('predict.html', prediction=prediction_list, download_link='/download')
             return render_template('home.html', error="No file uploaded")
     return render_template('predict.html')

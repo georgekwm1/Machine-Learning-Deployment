@@ -9,9 +9,6 @@ checkbox.addEventListener('change', function() {
     }
 });
 
-document.getElementById('custom-button').addEventListener('click', function() {
-    document.getElementById('file-upload').click();
-});
 
 function readURL(input) {
     if (input.files && input.files[0]) {

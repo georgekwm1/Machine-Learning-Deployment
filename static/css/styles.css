@@ -10,103 +10,200 @@
 
 }
 
-  /* Navbar */
+/* Base navigation styling */
+
+.nav-sty{
+  margin-bottom: 100px !important;
+}
 
 nav {
-    background: #0082e6;
-    height: 80px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-  }
-  
+  background: #0082e6;
+  height: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  bottom: 30;
+  z-index: 1000;
+}
+
+/* Logo styling */
+a.logo {
+  color: white;
+  font-size: 35px;
+  line-height: 80px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a.logo:hover{
+  background: none;
+}
+
+/* Navigation list styling */
+nav ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navigation links styling */
+nav ul li a {
+  color: white;
+  font-size: 17px;
+  padding: 7px 13px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+/* Active and hover state styling */
+a.active, a:hover {
+  background: #1b9bff;
+  transition: .5s;
+}
+
+/* Sidebar button */
+.checkbtn {
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+  display: none;
+}
+
+/* Hidden checkbox */
+#check {
+  display: none;
+}
+
+/* Responsive styling for medium screens */
+@media (max-width: 952px) {
   label.logo {
-    color: white;
-    font-size: 35px;
-    line-height: 80px;
-    font-weight: bold;
-    cursor: pointer;
+      font-size: 30px;
   }
-  
-  nav ul {
-    display: flex;
-    align-items: center;
-  }
-  
-  nav ul li {
-    list-style: none;
-  }
-  
   nav ul li a {
-    color: white;
-    font-size: 17px;
-    padding: 7px 13px;
-    border-radius: 3px;
-    text-transform: uppercase;
-    text-decoration: none;
-    margin: 0 5px;
+      font-size: 16px;
   }
-  
-  nav ul li a.active,  nav ul li a:hover {
-    background: #1b9bff;
-    transition: .5s;
-  }
-  
+}
+
+/* Responsive styling for small screens */
+@media (max-width: 858px) {
   .checkbtn {
-    font-size: 30px;
-    color: white;
-    cursor: pointer;
-    display: none;
+      display: block;
+  }
+  nav ul {
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      background: #0074cd;
+      top: 80px;
+      left: -100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all .5s;
+      overflow: auto;
+      z-index: 1000;
+    }
+  nav ul li {
+      margin: 50px 0;
+  }
+  nav ul li a {
+      font-size: 20px;
+  }
+  a:hover, a.active {
+      background: none;
+      color: #0082e6;
+  }
+  #check:checked ~ ul {
+      left: 0;
+  }
+  /* Disable scrolling on the body when the sidebar is active */
+  #check:checked ~ body {
+      overflow: hidden;
+  }
+}
+
+  .upload-button-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    box-shadow: 1.5px 3px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #f9f9f9;
   }
   
-  #check {
-    display: none;
+  .upload-button-container p {
+    margin-top: 10px;
+    color: #555;
   }
   
-  @media (max-width: 952px) {
-    label.logo {
-        font-size: 30px;
-    }
-    nav ul li a {
-        font-size: 16px;
-    }
+  .btn-sty {
+    width: 100%;
+    max-width: 300px;
   }
   
-  @media (max-width: 858px) {
-    .checkbtn {
-        display: block;
+  @media (max-width: 768px) {
+    .upload-button-container {
+        width: 90%;
+        margin: auto;
+        order: 1;
     }
-    nav ul {
-        position: fixed;
+  
+    .about{
+      order: 2;
+      margin-top: 30px !important;
+    }
+  
+    .btn-sty {
         width: 100%;
-        height: 100vh;
-        background: #0074cd;
-        top: 80px;
-        left: -100%;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: all .5s;
-        overflow: hidden;
+        padding: 15px 0;
+        font-size: 18px;
     }
-    nav ul li {
-        margin: 50px 0;
+  }
+  
+  @media (max-width: 480px) {
+    .btn-sty {
+        font-size: 16px;
+        padding: 12px 0;
     }
-    nav ul li a {
-        font-size: 20px;
-    }
-    a:hover, a.active {
-        background: none;
-        color: #0082e6;
-    }
-    #check:checked ~ ul {
-        left: 0;
-    }
-    #check:checked ~ body {
-        overflow: hidden; 
-      }
+  }
+  
+  .steps .steps-card .step-num {
+    padding: 11px;
+    background-color: black;
+    color: white;
+    width: 55px;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px auto;
+  }
+  
+  
+  .btn-sty{
+      color: white;
+      border: none;
+      cursor: pointer;
+      width: 70%;
+      height: 25%;
+      padding: 4px 10px;
+      border-radius: 30px;
+  }
+  
+  button:hover {
+      background-color: #0056b3;
   }
   
 
@@ -129,6 +226,7 @@ nav {
     background: #0082e6;
     border: none;
     padding: 15px;
+    text-align: center !important;
     border-radius: 20px;
     border-bottom: 4px solid #005bb5;
     transition: all .2s ease;
@@ -259,6 +357,10 @@ nav {
     display: flex;
     flex-direction: column;
   }
+
+  .down-btn{
+    background: none !important;
+  }
   
   /* Responsive styling */
   @media (max-width: 768px) {
@@ -323,11 +425,9 @@ nav {
     }
 }
 
-
 /* About Section Styles */
 
 .about {
-  background-color: #f9f9f9 !important;
   border-radius: 10px;
   padding: 20px;
 }
