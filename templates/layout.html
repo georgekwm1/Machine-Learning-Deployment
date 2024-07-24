@@ -27,10 +27,10 @@
         </label>
         <a class="logo" href="/">Predictify</a>
         <ul>
-          <li><a class="active" href="/">Home</a></li>
-          <li><a href="{{ url_for('about') }}">About</a></li>
-          <li><a href="{{ url_for('predict') }}">Predict</a></li>
-          <li><a href="{{ url_for('contact') }}">Contact</a></li>
+          <li><a class="{{ 'active' if request.path == url_for('Home') }}" href="/">Home</a></li>
+          <li><a class="{{ 'active' if request.path == url_for('about') }}" href="{{ url_for('about') }}" >About</a></li>
+          <li><a class="{{ 'active' if request.path == url_for('predict') }}" href="{{ url_for('predict') }}">Predict</a></li>
+          <li><a class="{{ 'active' if request.path == url_for('contact') }}" href="{{ url_for('contact') }}">Contact</a></li>
         </ul>
       </nav>
     </div>
