@@ -131,56 +131,6 @@ a.active, a:hover {
   }
 }
 
-  /* .upload-button-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    box-shadow: 1.5px 3px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    padding: 20px;
-    margin-top: 20px;
-    background-color: #f9f9f9;
-  }
-  
-  .upload-button-container p {
-    margin-top: 10px;
-    color: #555;
-  }
-  
-  .btn-sty {
-    width: 100%;
-    max-width: 300px;
-  }
-  
-  @media (max-width: 768px) {
-    .upload-button-container {
-        width: 90%;
-        margin: auto;
-        order: 1;
-    }
-  
-    .about{
-      order: 2;
-      margin-top: 30px !important;
-    }
-  
-    .btn-sty {
-        width: 100%;
-        padding: 15px 0;
-        font-size: 18px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .btn-sty {
-        font-size: 16px;
-        padding: 12px 0;
-    }
-  } */
-  
-
   .upload-button-container {
     position: relative;
     display: flex;
@@ -254,11 +204,6 @@ a.active, a:hover {
         padding: 12px 0;
     }
 }
-
-
-
-
-
 
   .steps .steps-card .step-num {
     padding: 11px;
@@ -555,7 +500,6 @@ a.active, a:hover {
   transform: translateY(-10px);
 }
 
-
 /* Contact Styles */
 
 .section-title {
@@ -564,7 +508,6 @@ a.active, a:hover {
   text-align: center;
   position: relative;
 }
-
 
 .faq-contact-area, .con-form {
   box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.05);
