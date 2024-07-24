@@ -1,44 +1,56 @@
-{% extends 'layout.html' %} {% block title %} Home - Predictify {% endblock %}
+{% extends 'layout.html' %}
+{% block title %} Home - Predictify {% endblock %}
 {% block content %}
 <div class="container my-5">
   <section class="row p-3 p-lg-5 upload border-bottom mt-5">
     <div class="col-12 col-lg-6">
       <p>
         Welcome to Predictify!
-        <br />
-        <br />
-        Unlock the power of machine learning with Predictify, your go-to
-        platform for accurate and efficient predictions. Whether you're a data
-        enthusiast, a business professional, or a curious mind, Predictify
-        provides you with seamless access to cutting-edge predictive analytics.
-        Simply upload your data, and let our advanced algorithms do the rest.
-        Join us in exploring the future of data-driven decision-making, where
-        your insights are just a click away. Experience the future. Experience
-        Predictify.
+        <br /><br />
+        Unlock the power of machine learning with Predictify, your go-to platform for accurate and efficient predictions. Whether you're a data enthusiast, a business professional, or a curious mind, Predictify provides you with seamless access to cutting-edge predictive analytics. Simply upload your data, and let our advanced algorithms do the rest. Join us in exploring the future of data-driven decision-making, where your insights are just a click away. Experience the future. Experience Predictify.
       </p>
     </div>
 
     <div class="upload-button-container col-12 col-lg-6 mx-auto">
+      <div class="overlay">
+        <div class="spinner ">
+          <div class="spinner-grow text-danger" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <span class="mt-4 text-white">Loading...</span>
+        </div>
+      </div>
       <form action="/upload" method="POST" enctype="multipart/form-data">
         <input
           type="file"
           id="file-upload"
           name="file"
+          class="file-upload-input"
           style="display: none"
           required
+          onchange="readURL(this);"
         />
         <button
           id="custom-button"
-          class="btn btn-primary btn-lg mt-5 btn-sty"
-          onclick="document.getElementById('file-upload').click()"
+          class="btn btn-primary btn-lg mt-5 btn-sty pt-4 pb-5 file-upload-btn"
           type="button"
+          onclick="document.getElementById('file-upload').click()"
         >
           Select File
         </button>
-        <button class="btn btn-secondary btn-lg mt-5 btn-sty" type="submit">
-          Upload file
-        </button>
+    
         <p>Upload CSV or Excel file here</p>
+        
+        <div class="file-upload-content" style="display: none;">
+          <div id="file-preview"></div>
+          <button class="btn btn-danger btn-lg mt-3 mb-2" type="button" onclick="removeTestUpload()">
+            Remove File
+          </button>
+          <button class="btn btn-secondary btn-lg btn-sty" type="submit" onclick="upload()">
+            Upload file
+          </button>
+        </div>
+        
         {% if file|length == 0 %} {% elif file %}
         <h1>Uploaded {{ file.filename }}</h1>
 
@@ -55,39 +67,21 @@
       <div class="col-12 col-lg-4 steps-card">
         <h3 class="step-num">1</h3>
         <p>
-          Before uploading a file, the data should be cleaned. The cleaning
-          involves removing any column that has rows which contains any alphabet
-          or words as values. The column names should be at the first row of the
-          file. If any column contains a word or alphabet, the column will be
-          completely removed and not used for analysis. The file should only
-          contain <b><em>Numerical values</em></b
-          >. The column of what you intend to predict must be placed as the last
-          column in the file.
+          Before uploading a file, the data should be cleaned. The cleaning involves removing any column that has rows which contains any alphabet or words as values. The column names should be at the first row of the file. If any column contains a word or alphabet, the column will be completely removed and not used for analysis. The file should only contain <b><em>Numerical values</em></b>. The column of what you intend to predict must be placed as the last column in the file.
         </p>
       </div>
 
       <div class="col-12 col-lg-4 steps-card">
         <h3 class="step-num">2</h3>
         <p>
-          <b><em>Select</em></b> and <b><em>Upload</em></b> a file (csv or excel
-          file). This is the file that will be used to train the model that will
-          be predicted. Give it a little time to analyze the data and train the
-          model. Depending on the volume of the data, it could take a little
-          more time, be patient.
+          <b><em>Select</em></b> and <b><em>Upload</em></b> a file (csv or excel file). This is the file that will be used to train the model that will be predicted. Give it a little time to analyze the data and train the model. Depending on the volume of the data, it could take a little more time, be patient.
         </p>
       </div>
 
       <div class="col-12 col-lg-4 steps-card">
         <h3 class="step-num">3</h3>
         <p>
-          When the upload is completed, you will be automatically directed to
-          the predict page. This is where you will input the file you want to
-          predict. The file you want to predict should be cleaned and arranged
-          as the file used to train the model, all the columns should be
-          arranged the same way, however, there should be no values in the last
-          column since that is what you want to predict. Click on
-          <b><em>Predict</em></b> to run the predictions. After a successful
-          prediction, the output file should be availble for download.
+          When the upload is completed, you will be automatically directed to the predict page. This is where you will input the file you want to predict. The file you want to predict should be cleaned and arranged as the file used to train the model, all the columns should be arranged the same way, however, there should be no values in the last column since that is what you want to predict. Click on <b><em>Predict</em></b> to run the predictions. After a successful prediction, the output file should be availble for download.
         </p>
       </div>
       <div class="col-12 col-lg-4 steps-card">
