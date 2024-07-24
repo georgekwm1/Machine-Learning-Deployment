@@ -31,6 +31,20 @@ function readURL(input) {
     }
 }
 
+// file-upload-content
+
+function removeTestUpload() {
+    const fileInput = document.getElementById('file-upload');
+    fileInput.value = '';
+    document.getElementById('file-preview').innerHTML = '';
+    $('.file-upload-btn').show();
+    $('.file-upload-content').hide();
+}
+
+function upload(){
+    $('.overlay').show()
+}
+
 function removeUpload() {
     $('.file-upload-input').replaceWith($('.file-upload-input').clone());
     $('.file-upload-btn').show();
