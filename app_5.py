@@ -24,7 +24,7 @@ app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 app.config['MAIL_USERNAME'] = 'geonaetltd@gmail.com'
-app.config['MAIL_PASSWORD'] = 'pzri fmri ropp mddb'
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
 # initialize the database and other apps
 db = SQLAlchemy(app)
