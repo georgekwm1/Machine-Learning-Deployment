@@ -24,7 +24,7 @@ app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
 app.config['MAIL_USERNAME'] = 'geonaetltd@gmail.com'
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+app.config['MAIL_PASSWORD'] = 'pzri fmri ropp mddb'
 
 # initialize the database and other apps
 db = SQLAlchemy(app)
@@ -130,7 +130,8 @@ def contact():
         msg = Message()
         msg.subject = "Contact submission form"
         msg.sender = 'geonaetltd@gmail.com'
-        msg.recipients = ['geonaetltd@gmail.com']
+        msg.recipients = ['geonaetltd@gmail.com',
+                          'timmyspark1@gmail.com', 'hamisuyusuf180@gmail.com']
         msg.body = f"""
         First Name: {firstname}
         Last Name: {lastname}

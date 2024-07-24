@@ -36,21 +36,21 @@
                         </div>
                     </div>
                 </div>
-
+            </div>
             </form>
         </div>
     </section>
 
     <!-- PREDICTION OUTPUT -->
 
-    <section class="output mt-5">
+    <section class="output mt-5 mx-3">
       <h4 class="label mb-4">Response</h4>
       <p> Here are just a few of the records. For a complete view, please download the full prediction report. </p>
       <div class="container mt-5 border mb-5">
         {% if prediction|length == 0 %}
         <h3 class="p-3">Please upload a file first</h3>
         {% elif prediction %}
-        <div class="table-responsive">
+        <div class="table-responsive p-3">
           <table class="table table-striped table-bordered">
             <thead class="thead-dark">
               <tr>
